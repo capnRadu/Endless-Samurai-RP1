@@ -17,7 +17,16 @@ public class HeroKnight : MonoBehaviour {
     private Sensor_HeroKnight   m_wallSensorL2;
     private bool                m_isWallSliding = false;
     private bool                m_grounded = false;
+
     private bool                m_rolling = false;
+    public bool Rolling
+    {
+        get
+        {
+            return m_rolling;
+        }
+    }
+
     private int                 m_facingDirection = 1;
     private int                 m_currentAttack = 0;
     private float               m_timeSinceAttack = 0.0f;
@@ -31,7 +40,15 @@ public class HeroKnight : MonoBehaviour {
     private float m_comboResetTime; 
     private bool m_comboStarted = false;
     private float m_timeSinceSpacePress = 0.0f;
+
     private bool m_isBlocking = false;
+    public bool IsBlocking
+    {
+        get
+        {
+            return m_isBlocking;
+        }
+    }
 
     void Start ()
     {
@@ -114,10 +131,10 @@ public class HeroKnight : MonoBehaviour {
         switch (isRunning)
         {
             case true:
-                m_comboResetTime = 0.15f;
+                m_comboResetTime = 0.17f;
                 break;
             case false:
-                m_comboResetTime = 0.33f;
+                m_comboResetTime = 0.35f;
                 break;
         }
 
@@ -233,11 +250,8 @@ public class HeroKnight : MonoBehaviour {
     private void FixedUpdate()
     {
         // Automatic movement
-        if (!m_rolling)
-        {
-            m_body2d.velocity = new Vector2(m_speed, m_body2d.velocity.y);
-            m_animator.SetInteger("AnimState", 1);
-        }
+        m_body2d.velocity = new Vector2(m_speed, m_body2d.velocity.y);
+        m_animator.SetInteger("AnimState", 1);
     }
 
     // Animation Events
