@@ -73,7 +73,10 @@ public class HeroKnight : MonoBehaviour {
 
         // Disable rolling if timer extends duration
         if(m_rollCurrentTime > m_rollDuration)
+        {
             m_rolling = false;
+            m_rollCurrentTime = 0.0f;
+        }
 
         // Check if character just landed on the ground
         if (!m_grounded && m_groundSensor.State())

@@ -15,7 +15,7 @@ public abstract class Obstacle : MonoBehaviour
 
     protected void Update()
     {
-        if (transform.position.x < playerScript.gameObject.transform.position.x - 5)
+        if (transform.position.x < playerScript.gameObject.transform.position.x - 2)
         {
             Destroy(gameObject);
         }
