@@ -3,6 +3,14 @@
 public class HeroKnight : MonoBehaviour {
 
     [SerializeField] float      m_speed = 4.0f;
+    public float Speed
+    {
+        get
+        {
+            return m_speed;
+        }
+    }
+
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;

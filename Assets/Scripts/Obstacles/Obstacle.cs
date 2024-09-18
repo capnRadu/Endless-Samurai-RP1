@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public abstract class Obstacle : MonoBehaviour
 {
     protected HeroKnight playerScript;
+    protected PlayerHUD playerHUDScript;
 
     protected void Start()
     {
         playerScript = FindObjectOfType<HeroKnight>();
+        playerHUDScript = FindObjectOfType<PlayerHUD>();
     }
 
     protected void Update()
