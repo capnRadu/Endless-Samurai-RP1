@@ -58,6 +58,9 @@ public class HeroKnight : MonoBehaviour {
         }
     }
 
+    [SerializeField] private GameObject playerHud;
+    private PlayerHUD playerHudScript;
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -67,6 +70,8 @@ public class HeroKnight : MonoBehaviour {
         m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+
+        playerHudScript = playerHud.GetComponent<PlayerHUD>();
     }
 
     // Update is called once per frame
@@ -191,6 +196,7 @@ public class HeroKnight : MonoBehaviour {
             {
                 // Trigger the appropriate attack based on the number of presses
                 m_animator.SetTrigger("Attack" + m_spacePresses);
+                playerHudScript.UpdatePlayerAttackInfo(m_spacePresses);
                 Debug.Log("Attack" + m_spacePresses);
             }
             else // Running mode
@@ -261,8 +267,17 @@ public class HeroKnight : MonoBehaviour {
     private void FixedUpdate()
     {
         // Automatic movement
-        m_body2d.velocity = new Vector2(m_speed, m_body2d.velocity.y);
-        m_animator.SetInteger("AnimState", 1);
+        if (isRunning)
+        {
+            m_body2d.velocity = new Vector2(m_speed, m_body2d.velocity.y);
+            m_animator.SetInteger("AnimState", 1);
+        }
+        else
+        {
+            m_delayToIdle -= Time.deltaTime;
+            if (m_delayToIdle < 0)
+                m_animator.SetInteger("AnimState", 0);
+        }
     }
 
     // Animation Events
