@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HeroKnight : MonoBehaviour {
 
@@ -61,6 +64,14 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] private GameObject playerHud;
     private PlayerHUD playerHudScript;
 
+    [SerializeField] private Transform attackPoint;
+    private float attackRange = 0.5f;
+    [SerializeField] private LayerMask enemyLayers;
+
+    public int maxHealth = 100;
+    private int currentHealth;
+    private Animator animator;
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -72,6 +83,9 @@ public class HeroKnight : MonoBehaviour {
         m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
 
         playerHudScript = playerHud.GetComponent<PlayerHUD>();
+
+        currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -197,7 +211,26 @@ public class HeroKnight : MonoBehaviour {
                 // Trigger the appropriate attack based on the number of presses
                 m_animator.SetTrigger("Attack" + m_spacePresses);
                 playerHudScript.UpdatePlayerAttackInfo(m_spacePresses);
-                Debug.Log("Attack" + m_spacePresses);
+
+                int attackDamage = 0;
+                switch (m_spacePresses)
+                {
+                    case 1:
+                        attackDamage = 10;
+                        break;
+                    case 2:
+                        attackDamage = 20;
+                        break;
+                    case 3:
+                        attackDamage = 40;
+                        break;
+                }
+
+                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+                foreach (Collider2D enemy in hitEnemies)
+                {
+                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                }
             }
             else // Running mode
             {
@@ -278,6 +311,46 @@ public class HeroKnight : MonoBehaviour {
             if (m_delayToIdle < 0)
                 m_animator.SetInteger("AnimState", 0);
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (m_isBlocking)
+        {
+            return;
+        }
+
+        currentHealth -= damage;
+        Debug.Log(currentHealth);
+        animator.SetTrigger("Hurt");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        animator.SetTrigger("Death");
+        m_body2d.gravityScale = 0;
+        GetComponent<Collider2D>().enabled = false;
+        this.enabled = false;
+        StartCoroutine(RestartGame());
+    }
+
+    private IEnumerator RestartGame()
+    {
+        yield return new WaitForSeconds(0.8f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Animation Events

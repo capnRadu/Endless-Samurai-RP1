@@ -2101,6 +2101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScoreText: {fileID: 1394282143}
   playerHighScoreText: {fileID: 1751669252}
+  playerAttackTextPrefab: {fileID: 0}
 --- !u!1 &977587121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4420,6 +4421,12 @@ MonoBehaviour:
   m_noBlood: 0
   m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
   isRunning: 1
+  playerHud: {fileID: 0}
+  attackPoint: {fileID: 0}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  maxHealth: 100
 --- !u!61 &212939202837800113
 BoxCollider2D:
   m_ObjectHideFlags: 0
