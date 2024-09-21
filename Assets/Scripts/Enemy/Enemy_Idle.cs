@@ -6,15 +6,20 @@ public class Enemy_Idle : StateMachineBehaviour
 {
     private Transform player;
     private HeroKnight playerScript;
+    private Enemy enemyScript;
 
     private float attackRange = 2f;
-    private float attackCooldown = 2f;
+    private float attackCooldown;
     private float lastAttackTime = 0f;
+    private int attackStaminaDrain = 20;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         playerScript = FindObjectOfType<HeroKnight>();
         player = playerScript.gameObject.transform;
+        enemyScript = animator.GetComponent<Enemy>();
+
+        attackCooldown = Random.Range(0, 4f);
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -23,8 +28,11 @@ public class Enemy_Idle : StateMachineBehaviour
         {
             if (Time.time >= lastAttackTime + attackCooldown)
             {
-                animator.SetTrigger("Attack");
-                lastAttackTime = Time.time;
+                if (enemyScript.CurrentStamina - attackStaminaDrain >= 0)
+                {
+                    animator.SetTrigger("Attack");
+                    lastAttackTime = Time.time;
+                }
             }
         }
     }

@@ -11,6 +11,12 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
+    public float maxStamina = 100f;
+    private float currentStamina;
+    public float CurrentStamina { get { return currentStamina; } }
+    private float staminaRegenRate = 0.1f;
+    private float m_timeSinceLastAttack = 0.0f;
+
     private int attackDamage = 20;
     [SerializeField] private Vector3 attackOffset;
     private float attackRange = 0.5f;
@@ -23,6 +29,18 @@ public class Enemy : MonoBehaviour
         playerScript = FindObjectOfType<HeroKnight>();
 
         currentHealth = maxHealth;
+        currentStamina = maxStamina;
+    }
+
+    private void Update()
+    {
+        m_timeSinceLastAttack += Time.deltaTime;
+
+        if (m_timeSinceLastAttack > 1f && currentStamina < maxStamina)
+        {
+            currentStamina += staminaRegenRate;
+            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -71,10 +89,24 @@ public class Enemy : MonoBehaviour
         pos += transform.right * attackOffset.x;
         pos += transform.up * attackOffset.y;
 
+        int attackStaminaDrain = 20;
+
         Collider2D hit = Physics2D.OverlapCircle(pos, attackRange, attackMask);
         if (hit != null)
         {
+            currentStamina -= attackStaminaDrain;
             hit.GetComponent<HeroKnight>().TakeDamage(attackDamage);
+            m_timeSinceLastAttack = 0.0f;
         }
+    }
+
+    public float GetHealthPercentage()
+    {
+        return Mathf.Clamp((float)currentHealth / maxHealth, 0, 1);
+    }
+
+    public float GetStaminaPercentage()
+    {
+        return Mathf.Clamp((float)currentStamina / maxStamina, 0, 1);
     }
 }
