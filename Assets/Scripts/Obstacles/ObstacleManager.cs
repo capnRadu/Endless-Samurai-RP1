@@ -20,7 +20,7 @@ public class ObstacleManager : MonoBehaviour
     {
         while (true)
         {
-            if (GameObject.FindWithTag("Enemy") != null)
+            if (GameObject.FindWithTag("Enemy") != null || GameManager.Instance.isMenuActive)
             {
                 yield return null;
             }

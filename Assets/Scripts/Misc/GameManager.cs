@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private int playerScore;
     private int playerHighScore = 0;
 
+    public bool isMenuActive = true;
+
     private void Awake()
     {
         if (Instance == null)
@@ -54,6 +56,20 @@ public class GameManager : MonoBehaviour
         {
             playerHighScore = playerScore;
             playerHudScript.PlayerHighScoreText.text = $"HI {playerHighScore}";
+        }
+    }
+
+    public void UpdateMenu(bool open)
+    {
+        if (open)
+        {
+            isMenuActive = true;
+            FindObjectOfType<HeroKnight>().isRunning = false;
+        }
+        else
+        {
+            isMenuActive = false;
+            FindObjectOfType<HeroKnight>().isRunning = true;
         }
     }
 }
