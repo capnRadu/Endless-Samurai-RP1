@@ -17,7 +17,11 @@ public class PlayerScore : MonoBehaviour
     {
         while (true)
         {
-            GameManager.Instance.UpdatePlayerScore(1);
+            if (GetComponent<HeroKnight>().isRunning)
+            {
+                GameManager.Instance.UpdatePlayerScore(1);
+            }
+
             yield return new WaitForSeconds(0.5f);
         }
     }

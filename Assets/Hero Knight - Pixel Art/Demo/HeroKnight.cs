@@ -16,7 +16,6 @@ public class HeroKnight : MonoBehaviour {
 
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] float      m_rollForce = 6.0f;
-    [SerializeField] bool       m_noBlood = false;
     [SerializeField] GameObject m_slideDust;
 
     private Animator            m_animator;
@@ -75,6 +74,9 @@ public class HeroKnight : MonoBehaviour {
     private float m_timeSinceLastSpacePress = 0.0f;
 
     private Animator animator;
+
+    [SerializeField] private GameObject healthBar;
+    [SerializeField] private GameObject staminaBar;
 
     void Start ()
     {
@@ -336,6 +338,22 @@ public class HeroKnight : MonoBehaviour {
     public float GetStaminaPercentage()
     {
         return Mathf.Clamp((float)currentStamina / maxStamina, 0, 1);
+    }
+
+    public void UpdateGameMode(bool isCombatMode)
+    {
+        if (isCombatMode)
+        {
+            isRunning = false;
+            healthBar.SetActive(true);
+            staminaBar.SetActive(true);
+        }
+        else
+        {
+            isRunning = true;
+            healthBar.SetActive(false);
+            staminaBar.SetActive(false);
+        }
     }
 
     // Animation Events

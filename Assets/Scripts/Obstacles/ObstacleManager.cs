@@ -5,12 +5,13 @@ using UnityEngine;
 public class ObstacleManager : MonoBehaviour
 {
     [SerializeField] private HeroKnight heroKnight;
-    [SerializeField] private List<Obstacle> obstacles;
+    [SerializeField] private List<GameObject> obstacles;
     private float spawnDistance;
+    private int spawnedObstacles = 0;
 
     private void Start()
     {
-        spawnDistance = heroKnight.gameObject.transform.position.x + 8;
+        spawnDistance = heroKnight.gameObject.transform.position.x + 12;
 
         StartCoroutine(SpawnObstacles());
     }
@@ -19,11 +20,30 @@ public class ObstacleManager : MonoBehaviour
     {
         while (true)
         {
-            spawnDistance += 8;
-            Obstacle obstacle = obstacles[Random.Range(0, obstacles.Count)];
-            Instantiate(obstacle, new Vector3(spawnDistance, obstacle.transform.position.y, obstacle.transform.position.z), Quaternion.identity);
+            if (GameObject.FindWithTag("Enemy") != null)
+            {
+                yield return null;
+            }
+            else
+            {
+                spawnDistance += 12;
+                spawnedObstacles++;
 
-            yield return new WaitForSeconds(1);
+                GameObject obstacle;
+
+                if (spawnedObstacles % 4 == 0)
+                {
+                    obstacle = obstacles[obstacles.Count - 1];
+                }
+                else
+                {
+                    obstacle = obstacles[Random.Range(0, obstacles.Count - 1)];
+                }
+
+                Instantiate(obstacle, new Vector3(spawnDistance, obstacle.transform.position.y, obstacle.transform.position.z), Quaternion.identity);
+
+                yield return new WaitForSeconds(3);
+            }
         }
     }
 }

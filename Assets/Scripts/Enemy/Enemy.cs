@@ -34,12 +34,20 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        m_timeSinceLastAttack += Time.deltaTime;
-
-        if (m_timeSinceLastAttack > 1f && currentStamina < maxStamina)
+        if (playerScript.transform.position.x + 1.8f >= gameObject.transform.position.x)
         {
-            currentStamina += staminaRegenRate;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+            if (playerScript.isRunning)
+            {
+                playerScript.UpdateGameMode(true);
+            }
+
+            m_timeSinceLastAttack += Time.deltaTime;
+
+            if (m_timeSinceLastAttack > 1f && currentStamina < maxStamina)
+            {
+                currentStamina += staminaRegenRate;
+                currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+            }
         }
     }
 
@@ -71,6 +79,8 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        GameManager.Instance.UpdatePlayerScore(100);
+
         animator.SetTrigger("Death");
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
@@ -80,6 +90,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator DestroyEnemy()
     {
         yield return new WaitForSeconds(2f);
+        playerScript.UpdateGameMode(false);
         Destroy(gameObject);
     }
 
