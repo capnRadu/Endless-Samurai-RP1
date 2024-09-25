@@ -70,7 +70,7 @@ public class HeroKnight : MonoBehaviour {
 
     public float maxStamina = 100f;
     private float currentStamina;
-    private float staminaRegenRate = 0.1f;
+    private float staminaRegenRate = 0.2f;
     private float m_timeSinceLastSpacePress = 0.0f;
 
     private Animator animator;
@@ -193,15 +193,15 @@ public class HeroKnight : MonoBehaviour {
                 {
                     case 1:
                         attackDamage = 10;
-                        attackStaminaDrain = 15;
+                        attackStaminaDrain = 10;
                         break;
                     case 2:
                         attackDamage = 20;
-                        attackStaminaDrain = 30;
+                        attackStaminaDrain = 20;
                         break;
                     case 3:
                         attackDamage = 40;
-                        attackStaminaDrain = 60;
+                        attackStaminaDrain = 40;
                         break;
                 }
 

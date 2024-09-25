@@ -8,10 +8,13 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField] private List<GameObject> obstacles;
     private float spawnDistance;
     private int spawnedObstacles = 0;
+    private int enemySpawnRate;
 
     private void Start()
     {
         spawnDistance = heroKnight.gameObject.transform.position.x + 12;
+        enemySpawnRate = Random.Range(4, 7);
+        Debug.Log("Enemy spawn rate: " + enemySpawnRate);
 
         StartCoroutine(SpawnObstacles());
     }
@@ -31,9 +34,12 @@ public class ObstacleManager : MonoBehaviour
 
                 GameObject obstacle;
 
-                if (spawnedObstacles % 4 == 0)
+                if (spawnedObstacles % enemySpawnRate == 0)
                 {
                     obstacle = obstacles[obstacles.Count - 1];
+                    spawnedObstacles = 0;
+                    enemySpawnRate = Random.Range(4, 7);
+                    Debug.Log("Enemy spawn rate: " + enemySpawnRate);
                 }
                 else
                 {

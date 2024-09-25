@@ -17,12 +17,12 @@ public class Enemy : MonoBehaviour
     private float staminaRegenRate = 0.1f;
     private float m_timeSinceLastAttack = 0.0f;
 
-    private int attackDamage = 20;
+    private int attackDamage = 10;
     [SerializeField] private Vector3 attackOffset;
     private float attackRange = 0.5f;
     [SerializeField] private LayerMask attackMask;
 
-    private float blockChance = 0.5f;
+    private float blockChance = 0.2f;
 
     private void Start()
     {
