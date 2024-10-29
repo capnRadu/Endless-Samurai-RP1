@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     public bool isMenuActive = true;
 
+    public AudioSource energizingBackgroundMusic;
+    public AudioSource eerieBackgroundMusic;
+    public AudioSource crowSounds;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,6 +29,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        StartCoroutine(UpdateBackgroundMusic());
     }
 
     private void OnEnable()
@@ -45,6 +51,18 @@ public class GameManager : MonoBehaviour
         playerHudScript.PlayerScoreText.text = $"{playerScore}";
 
         playerHudScript.PlayerHighScoreText.text = $"HI {playerHighScore}";
+    }
+
+    private IEnumerator UpdateBackgroundMusic()
+    {
+        while (energizingBackgroundMusic.volume > 0)
+        {
+            yield return new WaitForSeconds(0.25f);
+
+            energizingBackgroundMusic.volume -= 0.005f;
+            eerieBackgroundMusic.volume += 0.01f;
+            crowSounds.volume += 0.007f;
+        }
     }
 
     public void UpdatePlayerScore(int score)
