@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     public AudioSource energizingBackgroundMusic;
     public AudioSource eerieBackgroundMusic;
     public AudioSource crowSounds;
+
+    private Light2D playerLight;
 
     private void Awake()
     {
@@ -51,6 +54,11 @@ public class GameManager : MonoBehaviour
         playerHudScript.PlayerScoreText.text = $"{playerScore}";
 
         playerHudScript.PlayerHighScoreText.text = $"HI {playerHighScore}";
+
+        playerLight = GameObject.FindWithTag("PlayerLight").GetComponent<Light2D>();
+        playerLight.pointLightOuterRadius = 24;
+
+        StartCoroutine(ReduceLight());
     }
 
     private IEnumerator UpdateBackgroundMusic()
@@ -62,6 +70,16 @@ public class GameManager : MonoBehaviour
             energizingBackgroundMusic.volume -= 0.005f;
             eerieBackgroundMusic.volume += 0.01f;
             crowSounds.volume += 0.007f;
+        }
+    }
+
+    private IEnumerator ReduceLight()
+    {
+        while (playerLight.pointLightOuterRadius > 4f)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            playerLight.pointLightOuterRadius -= 0.1f;
         }
     }
 
