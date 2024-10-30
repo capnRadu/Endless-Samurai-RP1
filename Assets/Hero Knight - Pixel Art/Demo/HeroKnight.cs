@@ -83,6 +83,9 @@ public class HeroKnight : MonoBehaviour {
     private float fearResetTimer = 0f;
     private bool isReducingFear = false;
 
+    [SerializeField] private GameObject runningControls;
+    [SerializeField] private GameObject combatControls;
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -382,12 +385,18 @@ public class HeroKnight : MonoBehaviour {
             isRunning = false;
             healthBar.SetActive(true);
             staminaBar.SetActive(true);
+
+            combatControls.SetActive(true);
+            runningControls.SetActive(false);
         }
         else
         {
             isRunning = true;
             healthBar.SetActive(false);
             staminaBar.SetActive(false);
+
+            combatControls.SetActive(false);
+            runningControls.SetActive(true);
         }
     }
 
