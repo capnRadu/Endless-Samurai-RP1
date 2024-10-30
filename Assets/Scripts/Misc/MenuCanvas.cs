@@ -15,6 +15,14 @@ public class MenuCanvas : MonoBehaviour
         foreach (Transform child in playerHud.transform)
         {
             child.gameObject.SetActive(true);
+
+            if (child.transform.childCount > 0)
+            {
+                foreach (Transform grandChild in child.transform)
+                {
+                    grandChild.gameObject.SetActive(true);
+                }
+            }
         }
     }
 

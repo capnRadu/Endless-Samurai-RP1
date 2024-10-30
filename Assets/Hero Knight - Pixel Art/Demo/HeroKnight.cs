@@ -78,6 +78,11 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] private GameObject healthBar;
     [SerializeField] private GameObject staminaBar;
 
+    [SerializeField] private FearMeter fearMeterScript;
+    private float fearReset = 3f;
+    private float fearResetTimer = 0f;
+    private bool isReducingFear = false;
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -272,6 +277,15 @@ public class HeroKnight : MonoBehaviour {
             currentStamina += staminaRegenRate;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
+
+        if (fearResetTimer < fearReset)
+        {
+            fearResetTimer += Time.deltaTime;
+        }
+        else if (!isReducingFear)
+        {
+            StartCoroutine(ReduceFearLevel());
+        }
     }
 
     private void FixedUpdate()
@@ -309,19 +323,40 @@ public class HeroKnight : MonoBehaviour {
         Debug.Log(currentHealth);
         animator.SetTrigger("Hurt");
 
+        fearMeterScript.UpdateFearLevel(5);
+        ResetFearTimer();
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {
         animator.SetTrigger("Death");
         m_body2d.gravityScale = 0;
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
         StartCoroutine(RestartGame());
+    }
+
+    private IEnumerator ReduceFearLevel()
+    {
+        isReducingFear = true;
+
+        while (fearMeterScript.CurrentFear > 0 && fearResetTimer >= fearReset)
+        {
+            fearMeterScript.UpdateFearLevel(-1);
+            yield return new WaitForSeconds(1f);
+        }
+
+        isReducingFear = false;
+    }
+
+    public void ResetFearTimer()
+    {
+        fearResetTimer = 0f;
     }
 
     private IEnumerator RestartGame()

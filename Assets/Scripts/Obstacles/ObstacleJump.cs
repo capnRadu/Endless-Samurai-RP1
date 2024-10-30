@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class ObstacleJump : Obstacle
 {
-    public override void PlayerCollision()
+    ObstacleJump()
     {
-        base.PlayerCollision();
-
-        RestartLevel();
+        fearAmount = 5f;
     }
 }

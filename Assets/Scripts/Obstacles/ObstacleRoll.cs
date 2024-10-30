@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class ObstacleRoll : Obstacle
 {
-    public override void PlayerCollision()
+    ObstacleRoll()
     {
-        base.PlayerCollision();
+        fearAmount = 10f;
+    }
 
+    protected override void PlayerCollision()
+    {
         if (playerScript.Rolling)
         {
             Destroy(gameObject);
+            return;
         }
-        else
-        {
-            RestartLevel();
-        }
+
+        base.PlayerCollision();
     }
 }

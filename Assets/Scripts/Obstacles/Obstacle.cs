@@ -8,11 +8,15 @@ public abstract class Obstacle : MonoBehaviour
 {
     protected HeroKnight playerScript;
     protected PlayerHUD playerHUDScript;
+    protected FearMeter fearMeterScript;
+
+    protected float fearAmount;
 
     protected void Start()
     {
         playerScript = FindObjectOfType<HeroKnight>();
         playerHUDScript = FindObjectOfType<PlayerHUD>();
+        fearMeterScript = FindObjectOfType<FearMeter>();
     }
 
     protected void Update()
@@ -31,8 +35,10 @@ public abstract class Obstacle : MonoBehaviour
         }
     }
 
-    public virtual void PlayerCollision()
+    protected virtual void PlayerCollision()
     {
+        fearMeterScript.UpdateFearLevel(fearAmount);
+        playerScript.ResetFearTimer();
     }
 
     protected void RestartLevel()
