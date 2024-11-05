@@ -376,6 +376,21 @@ public class HeroKnight : MonoBehaviour {
         activeKey = newActiveKey;
         playerHudScript.UpdateActionSprite();
         Debug.Log("New active key: " + activeKey);
+
+        StartCoroutine(FlashSprite());
+    }
+
+    private IEnumerator FlashSprite()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+
+        for (int i = 0; i < 2; i++)
+        {
+            sprite.color = Color.red;
+            yield return new WaitForSeconds(0.2f);
+            sprite.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private IEnumerator RestartGame()
