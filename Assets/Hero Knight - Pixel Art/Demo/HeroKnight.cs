@@ -86,6 +86,10 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] private GameObject runningControls;
     [SerializeField] private GameObject combatControls;
 
+    public KeyCode activeKey = KeyCode.Space;
+    private KeyCode[] alternativeKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Q,
+                                          KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.O, KeyCode.P, KeyCode.Space };
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -107,7 +111,7 @@ public class HeroKnight : MonoBehaviour {
     void Update ()
     {
         // Increase timer that controls space combo
-         m_timeSinceFirstSpacePress += Time.deltaTime;
+        m_timeSinceFirstSpacePress += Time.deltaTime;
 
         // Increase timer that checks roll duration
         if(m_rolling)
@@ -154,7 +158,7 @@ public class HeroKnight : MonoBehaviour {
 
         // Block
         // Check if space bar is being held down
-        if (Input.GetKey(KeyCode.Space) && !m_rolling)
+        if (Input.GetKey(activeKey) && !m_rolling)
         {
             m_timeSinceSpacePress += Time.deltaTime;
 
@@ -172,7 +176,7 @@ public class HeroKnight : MonoBehaviour {
         }
 
         // Handle combo logic
-        if (Input.GetKeyUp(KeyCode.Space) && !m_rolling && !m_isBlocking)
+        if (Input.GetKeyUp(activeKey) && !m_rolling && !m_isBlocking)
         {
             m_animator.SetBool("IdleBlock", false);
 
@@ -266,7 +270,7 @@ public class HeroKnight : MonoBehaviour {
         }
 
         // Stop blocking when space is released
-        if (Input.GetKeyUp(KeyCode.Space) && m_isBlocking)
+        if (Input.GetKeyUp(activeKey) && m_isBlocking)
         {
             m_animator.SetBool("IdleBlock", false);
             m_isBlocking = false;
@@ -360,6 +364,18 @@ public class HeroKnight : MonoBehaviour {
     public void ResetFearTimer()
     {
         fearResetTimer = 0f;
+
+        // Switch active key
+        KeyCode newActiveKey = alternativeKeys[UnityEngine.Random.Range(0, alternativeKeys.Length)];
+
+        while (newActiveKey == activeKey)
+        {
+            newActiveKey = alternativeKeys[UnityEngine.Random.Range(0, alternativeKeys.Length)];
+        }
+
+        activeKey = newActiveKey;
+        playerHudScript.UpdateActionSprite();
+        Debug.Log("New active key: " + activeKey);
     }
 
     private IEnumerator RestartGame()

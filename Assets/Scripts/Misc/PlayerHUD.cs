@@ -21,6 +21,8 @@ public class PlayerHUD : MonoBehaviour
 
     [SerializeField] private GameObject playerAttackTextPrefab;
 
+    public ActionControl[] keyboardActions;
+
     public void UpdatePlayerAttackInfo(int attackCombo)
     {
         GameObject playerAttackTextObject = Instantiate(playerAttackTextPrefab);
@@ -51,5 +53,13 @@ public class PlayerHUD : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Destroy(textObject);
+    }
+
+    public void UpdateActionSprite()
+    {
+        foreach (var action in keyboardActions)
+        {
+            action.SetupSprites();
+        }
     }
 }

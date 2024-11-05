@@ -659,7 +659,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -149}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &143107228
 MonoBehaviour:
@@ -734,7 +734,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -29}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160721778
 MonoBehaviour:
@@ -7146,7 +7146,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -89}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &517539962
 MonoBehaviour:
@@ -12051,7 +12051,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -89}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &548254853
 MonoBehaviour:
@@ -13715,6 +13715,9 @@ MonoBehaviour:
   playerScoreText: {fileID: 1394282143}
   playerHighScoreText: {fileID: 1751669252}
   playerAttackTextPrefab: {fileID: 638120876532716134, guid: e94398bfd3338a84c9a0598588232f6d, type: 3}
+  keyboardActions:
+  - {fileID: 1827288477}
+  - {fileID: 1536519226}
 --- !u!1 &948210319
 GameObject:
   m_ObjectHideFlags: 0
@@ -21071,6 +21074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1536519225}
+  - component: {fileID: 1536519226}
   m_Layer: 5
   m_Name: Spacebar Combat Actions
   m_TagString: Untagged
@@ -21101,6 +21105,42 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -213.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1536519226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536519224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bace9bf9b49e100469ec3d9581eca4f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1824337364}
+  actionKeys:
+  - {fileID: 21300000, guid: 674acfcc178d85e40adadd382a5a0b6b, type: 3}
+  - {fileID: 21300000, guid: 2634db87fca275248bad017c2d1c3779, type: 3}
+  - {fileID: 21300000, guid: 09fb45feffd1f7147b2612e42e648d73, type: 3}
+  - {fileID: 21300000, guid: 420efb8743002074681cc632f3ccf812, type: 3}
+  - {fileID: 21300000, guid: a9a618d2d1845844da7253a85a4c7661, type: 3}
+  - {fileID: 21300000, guid: e588bd649239f8144a6ef76e0e11f10c, type: 3}
+  - {fileID: 21300000, guid: dbec1399ba6992e4d9ca44f1ec66347c, type: 3}
+  - {fileID: 21300000, guid: b10a428ca2d42fb40ad6ccdb84940922, type: 3}
+  - {fileID: 21300000, guid: 59e56e955a90f1f41a5342f08935b745, type: 3}
+  - {fileID: 21300000, guid: 77ad4d9f6c9c79e4d83e48ceea904e41, type: 3}
+  - {fileID: 21300000, guid: e86044f098dd2564fb144e6f90d3ee0c, type: 3}
+  - {fileID: 21300000, guid: 53ee5cad02401204092741e83ee9020b, type: 3}
+  - {fileID: 21300000, guid: b71dace8f320ba6448a6f21968d43291, type: 3}
+  - {fileID: 21300000, guid: 5973e5f550ceede4a9140df6d023854a, type: 3}
+  - {fileID: 21300000, guid: 42cefba46fe954f4899404e806a5042e, type: 3}
+  - {fileID: 21300000, guid: 9f759b855a335424999c944b57aca13a, type: 3}
+  - {fileID: 21300000, guid: ce9458d7cde897f43bffda4f082116a4, type: 3}
+  icons:
+  - {fileID: 160721778}
+  - {fileID: 517539962}
+  - {fileID: 1822847777}
+  - {fileID: 1723579391}
 --- !u!1 &1544906564
 GameObject:
   m_ObjectHideFlags: 0
@@ -21768,7 +21808,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -209}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1723579391
 MonoBehaviour:
@@ -22246,7 +22286,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -149}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1822847777
 MonoBehaviour:
@@ -22337,6 +22377,7 @@ MonoBehaviour:
   fearMeterScript: {fileID: 1048334788}
   runningControls: {fileID: 1827288475}
   combatControls: {fileID: 1536519224}
+  activeKey: 32
 --- !u!4 &1824337365
 Transform:
   m_ObjectHideFlags: 0
@@ -22612,13 +22653,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1827288476}
+  - component: {fileID: 1827288477}
   m_Layer: 5
   m_Name: Spacebar Running Actions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1827288476
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22641,6 +22683,41 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: -213.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1827288477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827288475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bace9bf9b49e100469ec3d9581eca4f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1824337364}
+  actionKeys:
+  - {fileID: 21300000, guid: 674acfcc178d85e40adadd382a5a0b6b, type: 3}
+  - {fileID: 21300000, guid: 2634db87fca275248bad017c2d1c3779, type: 3}
+  - {fileID: 21300000, guid: 09fb45feffd1f7147b2612e42e648d73, type: 3}
+  - {fileID: 21300000, guid: 420efb8743002074681cc632f3ccf812, type: 3}
+  - {fileID: 21300000, guid: a9a618d2d1845844da7253a85a4c7661, type: 3}
+  - {fileID: 21300000, guid: e588bd649239f8144a6ef76e0e11f10c, type: 3}
+  - {fileID: 21300000, guid: dbec1399ba6992e4d9ca44f1ec66347c, type: 3}
+  - {fileID: 21300000, guid: b10a428ca2d42fb40ad6ccdb84940922, type: 3}
+  - {fileID: 21300000, guid: 59e56e955a90f1f41a5342f08935b745, type: 3}
+  - {fileID: 21300000, guid: 77ad4d9f6c9c79e4d83e48ceea904e41, type: 3}
+  - {fileID: 21300000, guid: e86044f098dd2564fb144e6f90d3ee0c, type: 3}
+  - {fileID: 21300000, guid: 53ee5cad02401204092741e83ee9020b, type: 3}
+  - {fileID: 21300000, guid: b71dace8f320ba6448a6f21968d43291, type: 3}
+  - {fileID: 21300000, guid: 5973e5f550ceede4a9140df6d023854a, type: 3}
+  - {fileID: 21300000, guid: 42cefba46fe954f4899404e806a5042e, type: 3}
+  - {fileID: 21300000, guid: 9f759b855a335424999c944b57aca13a, type: 3}
+  - {fileID: 21300000, guid: ce9458d7cde897f43bffda4f082116a4, type: 3}
+  icons:
+  - {fileID: 1868611269}
+  - {fileID: 548254853}
+  - {fileID: 143107228}
 --- !u!1 &1828375080
 GameObject:
   m_ObjectHideFlags: 0
@@ -23034,7 +23111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -30, y: -29}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1868611269
 MonoBehaviour:

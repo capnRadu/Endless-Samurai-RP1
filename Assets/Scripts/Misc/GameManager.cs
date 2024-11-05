@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         while (energizingBackgroundMusic.volume > 0)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.15f);
 
             energizingBackgroundMusic.volume -= 0.005f;
             eerieBackgroundMusic.volume += 0.01f;
