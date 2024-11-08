@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class HeroKnight : MonoBehaviour {
 
@@ -90,6 +91,11 @@ public class HeroKnight : MonoBehaviour {
     private KeyCode[] alternativeKeys = { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.H, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.Q,
                                           KeyCode.E, KeyCode.R, KeyCode.T, KeyCode.Y, KeyCode.U, KeyCode.O, KeyCode.P, KeyCode.Space };
 
+    public bool isCursed = false;
+    private float cursedActionDelay = 0.5f;
+    private float waitTime = 0f;
+    private Coroutine[] runningCoroutine = new Coroutine[1];
+
     void Start ()
     {
         m_animator = GetComponent<Animator>();
@@ -156,6 +162,13 @@ public class HeroKnight : MonoBehaviour {
                 break;
         }
 
+        waitTime = 0f;
+
+        if (isCursed)
+        {
+            waitTime = cursedActionDelay;
+        }
+
         // Block
         // Check if space bar is being held down
         if (Input.GetKey(activeKey) && !m_rolling)
@@ -164,10 +177,10 @@ public class HeroKnight : MonoBehaviour {
 
             if (m_timeSinceSpacePress > 0.2f && !m_isBlocking)
             {
-                m_animator.SetTrigger("Block");
-                m_animator.SetBool("IdleBlock", true);
-                m_isBlocking = true;
-                Debug.Log("Blocking");
+                if (runningCoroutine[0] == null)
+                {
+                    runningCoroutine[0] = StartCoroutine(Block(waitTime));
+                }
             }
         }
         else
@@ -239,13 +252,10 @@ public class HeroKnight : MonoBehaviour {
                         // Jump
                         if (m_grounded && !m_rolling && !m_isBlocking)
                         {
-                            m_animator.SetTrigger("Jump");
-                            m_grounded = false;
-                            m_animator.SetBool("Grounded", m_grounded);
-                            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-                            m_groundSensor.Disable(0.2f);
-
-                            Debug.Log("Jump");
+                            if (runningCoroutine[0] == null)
+                            {
+                                runningCoroutine[0] = StartCoroutine(Jump(waitTime));
+                            }
                         }
                         break;
                     case 2:
@@ -253,11 +263,10 @@ public class HeroKnight : MonoBehaviour {
                         // Roll
                         if (!m_rolling && !m_isWallSliding && !m_isBlocking)
                         {
-                            m_rolling = true;
-                            m_animator.SetTrigger("Roll");
-                            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-
-                            Debug.Log("Roll");
+                            if (runningCoroutine[0] == null)
+                            {
+                                runningCoroutine[0] = StartCoroutine(Roll(waitTime));
+                            }
                         }
                         break;
                 }
@@ -275,6 +284,8 @@ public class HeroKnight : MonoBehaviour {
             m_animator.SetBool("IdleBlock", false);
             m_isBlocking = false;
             m_timeSinceSpacePress = 0.0f;
+
+            runningCoroutine[0] = null;
         }
 
         m_timeSinceLastSpacePress += Time.deltaTime;
@@ -293,6 +304,11 @@ public class HeroKnight : MonoBehaviour {
         {
             StartCoroutine(ReduceFearLevel());
         }
+
+        if (!FindObjectOfType<Enemy>() && currentHealth != maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
     private void FixedUpdate()
@@ -309,6 +325,45 @@ public class HeroKnight : MonoBehaviour {
             if (m_delayToIdle < 0)
                 m_animator.SetInteger("AnimState", 0);
         }
+    }
+
+    private IEnumerator Block(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        m_animator.SetTrigger("Block");
+        m_animator.SetBool("IdleBlock", true);
+        m_isBlocking = true;
+
+        Debug.Log("Blocking");
+    }
+
+    private IEnumerator Jump(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        m_animator.SetTrigger("Jump");
+        m_grounded = false;
+        m_animator.SetBool("Grounded", m_grounded);
+        m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+        m_groundSensor.Disable(0.2f);
+
+        runningCoroutine[0] = null;
+
+        Debug.Log("Jump");
+    }
+
+    private IEnumerator Roll(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        m_rolling = true;
+        m_animator.SetTrigger("Roll");
+        m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
+
+        runningCoroutine[0] = null;
+
+        Debug.Log("Roll");
     }
 
     private void OnDrawGizmosSelected()

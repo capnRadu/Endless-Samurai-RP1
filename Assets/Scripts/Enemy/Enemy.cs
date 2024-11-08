@@ -24,21 +24,42 @@ public class Enemy : MonoBehaviour
 
     private float blockChance = 0.2f;
 
+    public HauntingTimer hauntingTimer;
+    private bool isAreaHaunted;
+    public bool isPlayerCursed = false;
+
     private void Start()
     {
         playerScript = FindObjectOfType<HeroKnight>();
+        hauntingTimer = FindObjectOfType<HauntingTimer>();
 
         currentHealth = maxHealth;
         currentStamina = maxStamina;
+
+        isAreaHaunted = true;
+        Debug.LogError(isAreaHaunted);
     }
 
     private void Update()
     {
         if (playerScript.transform.position.x + 1.8f >= gameObject.transform.position.x)
         {
+            if (playerScript.isCursed)
+            {
+                playerScript.isCursed = false;
+                hauntingTimer.ResetTimer();
+                Debug.LogError("Player is no longer cursed!");
+            }
+
             if (playerScript.isRunning)
             {
                 playerScript.UpdateGameMode(true);
+            }
+
+            if (isAreaHaunted && !hauntingTimer.isActive)
+            {
+                hauntingTimer.StartTimer();
+                isAreaHaunted = false;
             }
 
             m_timeSinceLastAttack += Time.deltaTime;
@@ -84,6 +105,18 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Death");
         GetComponent<Collider2D>().enabled = false;
         this.enabled = false;
+
+        if (hauntingTimer.isActive)
+        {
+            hauntingTimer.ResetTimer();
+        }
+
+        if (isPlayerCursed)
+        {
+            Debug.LogError("Player is cursed!");
+            playerScript.isCursed = true;
+        }
+
         StartCoroutine(DestroyEnemy());
     }
 
@@ -91,6 +124,7 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         playerScript.UpdateGameMode(false);
+
         Destroy(gameObject);
     }
 

@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ReduceLight()
     {
-        while (playerLight.pointLightOuterRadius > 4f)
+        while (playerLight.pointLightOuterRadius > 10f)
         {
             yield return new WaitForSeconds(0.5f);
 
