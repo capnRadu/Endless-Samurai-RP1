@@ -116,6 +116,11 @@ public class HeroKnight : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
         // Increase timer that controls space combo
         m_timeSinceFirstSpacePress += Time.deltaTime;
 
